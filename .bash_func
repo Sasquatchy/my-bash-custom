@@ -8,6 +8,7 @@ function greet(){
 	else
 		echo 'Hello' $1 '!'
 	fi
+	return 0
 }
 
 #copy a backup .(ext).(datetime %Y%d%m)
@@ -15,9 +16,29 @@ function bckup (){
 	datetime="$(date +%Y%m%d%H%M%S)"
 	if [ $# -eq 2 ]
 	then
-		cp -r $1 $1.$2
+		cp -rl $1 $1.$2
 	else
-		cp -r $1 $1.$datetime
+		cp -rl $1 $1.$datetime
 
 	fi
+	return 0
+}
+
+function rstr () {
+	filename=$1
+	#datetime=$filename | rev | cut -d. -f1 | rev
+	#echo $datetime
+	#date "+%Y%m%d%H%M%S" -d $datetime > /dev/null  2>&1
+	#is_valid=$? 
+	#echo $is_valid
+	#if [ is_valid -ne 0 ]
+	#then
+	#	echo "file not in backup format"
+	#	return 1
+	#fi
+
+	restore_name="${filename%.*}"
+	#echo $restore_name
+	cp -l $filename $restore_name
+	return 0
 }
