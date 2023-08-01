@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#greet the user
+function greet(){
+	if [ -z "$1"]
+	then
+		echo "hello world !"
+	else
+		echo 'Hello' $1 '!'
+	fi
+}
+
+#copy a backup .(ext).(datetime %Y%d%m)
+function bckup (){
+	datetime="$(date +%Y%m%d%H%M%S)"
+	if [ $# -eq 2 ]
+	then
+		cp -r $1 $1.$2
+	else
+		cp -r $1 $1.$datetime
+
+	fi
+}
